@@ -1,9 +1,8 @@
-import { Container, Title } from "./styles";
+import { Container } from "./styles";
 
 export function Events() {
   return (
     <Container>
-      <Title>Events</Title>
     </Container>
   );
 }
