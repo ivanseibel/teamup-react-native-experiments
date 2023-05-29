@@ -57,7 +57,7 @@ export function Groups() {
         data={groups}
         keyExtractor={item => item.id}
         ListEmptyComponent={() => <EmptyList title="How about creating your first group?" />}
-        contentContainerStyle={ groups.length === 0 && { flex: 1 } }
+        showsVerticalScrollIndicator={false}
         renderItem={({ item }) => (
           <GroupCard 
             title={item.title}
