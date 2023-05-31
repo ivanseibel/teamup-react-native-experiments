@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { FlatList, View } from "react-native";
+import { FlatList } from "react-native";
+import { useRoute } from "@react-navigation/native";
 
 import { Header } from "@components/Header";
 import { Highlight } from "@components/Highlight";
@@ -18,6 +19,10 @@ type Player = {
   id: string;
   name: string;
   team: string;
+}
+
+type RouteParams = {
+  groupName: string;
 }
 
 const PLAYERS: Player[] = [
@@ -183,10 +188,12 @@ const PLAYERS: Player[] = [
     team: 'Team B'
   },
 ];
-
 export function Players() {
   const [team, setTeam] = useState<Teams>('Team A');
   const [players, setPlayers] = useState<Player[]>(PLAYERS);
+
+  const route = useRoute();
+  const { groupName } = route.params as RouteParams;
 
   return (
     <Container>
@@ -194,7 +201,7 @@ export function Players() {
         showBackButton
       />
       <Highlight 
-        title="Group name"
+        title={groupName}
         subtitle="Add your friends and create the teams"
       />
 
