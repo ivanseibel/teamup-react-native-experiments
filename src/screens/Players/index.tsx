@@ -16,6 +16,7 @@ import { addPlayerToGroup } from "@storage/player/addPlayerToGroup";
 import { AppError } from "@utils/AppError";
 import { PlayerStorageDTO } from "@storage/player/PlayerStorageDTO";
 import { getPlayersByGroup } from "@storage/player/getPlayersByGroup";
+import { removePlayerFromGroup } from "@storage/player/removePlayerFromGroup";
 
 type Teams = 'Team A' | 'Team B';
 
@@ -49,21 +50,36 @@ export function Players() {
     }
   }
 
-  useEffect(() => {
-    async function loadPlayers() {
-      try {
-        const players = await getPlayersByGroup(groupId);
-        setPlayers(players);
-      } catch (err) {
-        if (err instanceof AppError) {
-          return Alert.alert('Players', err.message);
-        }
-
-        console.log(err);
-        Alert.alert('Players', 'An error has occurred while trying to load the players.');
+  async function handleRemovePlayerFromGroup(playerId: string) {
+    try {
+      await removePlayerFromGroup(playerId, groupId);
+      // setPlayers(players.filter((player) => player.id !== playerId));
+      loadPlayers();
+    } catch (err) {
+      if (err instanceof AppError) {
+        return Alert.alert('Remove Player', err.message);
       }
-    }
 
+      console.log(err);
+      Alert.alert('Remove Player', 'An error has occurred while trying to remove the Player.');
+    }
+  }
+
+  async function loadPlayers() {
+    try {
+      const players = await getPlayersByGroup(groupId);
+      setPlayers(players);
+    } catch (err) {
+      if (err instanceof AppError) {
+        return Alert.alert('Players', err.message);
+      }
+
+      console.log(err);
+      Alert.alert('Players', 'An error has occurred while trying to load the players.');
+    }
+  }
+
+  useEffect(() => {
     loadPlayers();
   }, [team, groupId]);
 
@@ -129,7 +145,7 @@ export function Players() {
         renderItem={({ item }) => (
           <PlayerCard 
             name={item.name}
-            onRemove={() => {}}
+            onRemove={() => handleRemovePlayerFromGroup(item.id)}
           />
         )}
       />
