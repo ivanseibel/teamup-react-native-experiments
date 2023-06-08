@@ -50,6 +50,8 @@ export function NewGroup() {
           style={{ marginBottom: 20 }}
           value={groupName}
           onChangeText={setGroupName}
+          onSubmitEditing={handleCreate}
+          returnKeyType="done"
         />
 
         <Button 
