@@ -1,7 +1,9 @@
-import { Text } from "react-native";
+import { Container, Title } from "./styles";
 
 export function Events() {
   return (
-    <Text>Events</Text>
+    <Container>
+      <Title>Events</Title>
+    </Container>
   );
 }
