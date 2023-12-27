@@ -1,8 +1,12 @@
 import { Events } from '@screens/Events'
+import { ThemeProvider } from 'styled-components'
+import defaultTheme from './src/theme'
 
 export default function App() {
   return (
-    <Events />
+    <ThemeProvider theme={ defaultTheme }>
+      <Events />
+    </ThemeProvider>
   );
 }
 
