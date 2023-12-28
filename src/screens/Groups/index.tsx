@@ -3,8 +3,9 @@ import { Container } from "./styles";
 import { Highlight } from "@components/Highlight";
 import { GroupCard } from "@components/GroupCard";
 import { useState } from "react";
-import { FlatList } from "react-native";
+import { Alert, FlatList } from "react-native";
 import { EmptyList } from '../../components/EmptyList';
+import { Button } from "@components/Button";
 
 type Group = {
   id: string;
@@ -62,6 +63,11 @@ export function Groups() {
             title={item.title}
           />
         )}
+      />
+      <Button
+        label="Create Group"
+        variation="PRIMARY"
+        onPress={() => {Alert.alert('Create Group')}}
       />
     </Container>
   );
