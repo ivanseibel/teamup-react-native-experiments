@@ -13,3 +13,19 @@ export const Form = styled.View`
   border-radius: 6px;
   justify-content: center;
 `;
+
+export const HeaderList = styled.View`
+  flex-direction: row;
+  width: 100%;
+  margin: 32px 0 12px;
+  align-items: center;
+`;
+
+export const PlayersNumber = styled.Text`
+  ${({ theme }) => css`
+    font-family: ${theme.FONT_FAMILY.BOLD};
+    font-size: ${theme.FONT_SIZE.SM}px;
+    color: ${theme.COLORS.GRAY_200};
+    line-height: 22px;
+  `}
+`;
