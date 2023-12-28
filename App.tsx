@@ -1,4 +1,4 @@
-import { Events } from '@screens/Events'
+import { Groups } from '@screens/Groups'
 import { ThemeProvider } from 'styled-components'
 import { useFonts, Roboto_400Regular, Roboto_700Bold } from '@expo-google-fonts/roboto'
 import defaultTheme from './src/theme'
@@ -18,7 +18,7 @@ export default function App() {
         backgroundColor='transparent'
         translucent
       />
-      { !fontsLoaded ? <Loading /> : <Events /> }
+      { !fontsLoaded ? <Loading /> : <Groups /> }
     </ThemeProvider>
   );
 }
