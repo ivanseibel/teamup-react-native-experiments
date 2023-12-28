@@ -9,6 +9,8 @@ import { Filter } from "@components/Filter";
 
 import { Container, Form, HeaderList, PlayersNumber } from "./styles";
 import { PlayerCard } from "@components/PlayerCard";
+import { EmptyList } from "@components/EmptyList";
+import { Button } from "@components/Button";
 
 type Teams = 'Team A' | 'Team B';
 
@@ -80,6 +82,106 @@ const PLAYERS: Player[] = [
     name: 'Player 18',
     team: 'Team B'
   },
+  {
+    id: '19',
+    name: 'Player 19',
+    team: 'Team A'
+  },
+  {
+    id: '20',
+    name: 'Player 20',
+    team: 'Team B'
+  },
+  {
+    id: '21',
+    name: 'Player 21',
+    team: 'Team A'
+  },
+  {
+    id: '22',
+    name: 'Player 22',
+    team: 'Team B'
+  },
+  {
+    id: '23',
+    name: 'Player 23',
+    team: 'Team A'
+  },
+  {
+    id: '24',
+    name: 'Player 24',
+    team: 'Team B'
+  },
+  {
+    id: '25',
+    name: 'Player 25',
+    team: 'Team A'
+  },
+  {
+    id: '26',
+    name: 'Player 26',
+    team: 'Team B'
+  },
+  {
+    id: '27',
+    name: 'Player 27',
+    team: 'Team A'
+  },
+  {
+    id: '28',
+    name: 'Player 28',
+    team: 'Team B'
+  },
+  {
+    id: '29',
+    name: 'Player 29',
+    team: 'Team A'
+  },
+  {
+    id: '30',
+    name: 'Player 30',
+    team: 'Team B'
+  },
+  {
+    id: '31',
+    name: 'Player 31',
+    team: 'Team A'
+  },
+  {
+    id: '32',
+    name: 'Player 32',
+    team: 'Team B'
+  },
+  {
+    id: '33',
+    name: 'Player 33',
+    team: 'Team A'
+  },
+  {
+    id: '34',
+    name: 'Player 34',
+    team: 'Team B'
+  },
+  {
+    id: '35',
+    name: 'Player 35',
+    team: 'Team A'
+  },
+  {
+    id: '36',
+    name: 'Player 36',
+    team: 'Team B'
+  },
+  {
+    id: '37',
+    name: 'Player 37',
+    team: 'Team A'
+  },
+  {
+    id: '38',
+    name: 'Player 38',
+    team: 'Team B'
+  },
 ];
 
 export function Players() {
@@ -129,12 +231,27 @@ export function Players() {
       <FlatList 
         data={players.filter((player) => player.team === team)}
         keyExtractor={(item) => item.id}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={[
+          { paddingBottom: 100 },
+          players.length === 0 && { flex: 1 }
+        ]}
+        ListEmptyComponent={() => (
+          <EmptyList 
+            title="Add players to this team"
+          />
+        )}
         renderItem={({ item }) => (
           <PlayerCard 
             name={item.name}
             onRemove={() => {}}
           />
         )}
+      />
+
+      <Button 
+        label="Delete Group"
+        variation="SECONDARY"
       />
 
     </Container>
