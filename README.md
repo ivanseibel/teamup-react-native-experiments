@@ -2,15 +2,15 @@
 
 ## Overview
 
-TeamUp Playmaker is a mobile application built with React Native and TypeScript, designed to streamline the organization of group gaming events. Whether you're planning a casual game night or a competitive team face-off, TeamUp Playmaker makes it easy to create, manage, and join gaming events.
+TeamUp Playmaker is a mobile application built with React Native and TypeScript, designed to streamline the organization of group gaming groups. Whether you're planning a casual game night or a competitive team face-off, TeamUp Playmaker makes it easy to create, manage, and join gaming groups.
 
 ## Features
 
-- **Event List**: View a list of all created events. Users can tap on an event to view more details or create a new event.
+- **Groups List**: View a list of all created groups. Users can tap on an group to view more details or create a new group.
 
-- **Create New Event**: Users can create a new event, giving it a unique name and setting up the details.
+- **Create New Group**: Users can create a new group, giving it a unique name and setting up the details.
 
-- **Event Details**: In this screen, users can add members to two different teams: Team A and Team B. There's also an option to delete the event.
+- **Group Details**: In this screen, users can add members to two different teams: Team A and Team B. There's also an option to delete the group.
 
 ## Installation
 
