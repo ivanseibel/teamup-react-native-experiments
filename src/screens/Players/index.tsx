@@ -1,6 +1,8 @@
 import { Header } from "@components/Header";
-import { Container } from "./styles";
+import { Container, Form } from "./styles";
 import { Highlight } from "@components/Highlight";
+import { IconButton } from "@components/IconButton";
+import { Input } from "@components/Input";
 
 export function Players() {
   return (
@@ -12,6 +14,18 @@ export function Players() {
         title="Group name"
         subtitle="Add your friends and create the teams"
       />
+
+      <Form>
+        <Input 
+          placeholder="Type the player name"
+          autoCorrect={false}
+        />
+        <IconButton 
+          variant="primary"
+          icon="add"
+          onPress={() => {}}
+        />
+      </Form>
     </Container>
   )
 }
