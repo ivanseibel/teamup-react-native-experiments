@@ -4,6 +4,7 @@ import { Highlight } from "@components/Highlight";
 import { GroupCard } from "@components/GroupCard";
 import { useState } from "react";
 import { FlatList } from "react-native";
+import { EmptyList } from '../../components/EmptyList';
 
 type Group = {
   id: string;
@@ -54,6 +55,8 @@ export function Groups() {
       <FlatList 
         data={groups}
         keyExtractor={item => item.id}
+        ListEmptyComponent={() => <EmptyList title="How about creating your first group?" />}
+        contentContainerStyle={ groups.length === 0 && { flex: 1 } }
         renderItem={({ item }) => (
           <GroupCard 
             title={item.title}
