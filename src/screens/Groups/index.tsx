@@ -1,9 +1,14 @@
+import { useState } from "react";
+import { FlatList } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+
 import { Header } from "@components/Header";
-import { Container } from "./styles";
 import { Highlight } from "@components/Highlight";
 import { GroupCard } from "@components/GroupCard";
 import { Button } from "@components/Button";
 import { EmptyList } from "@components/EmptyList";
+
+import { Container } from "./styles";
 
 type Group = {
   id: string;
