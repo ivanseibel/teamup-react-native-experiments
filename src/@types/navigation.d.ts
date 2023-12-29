@@ -3,7 +3,10 @@ export declare global {
     interface RootParamList {
       Groups: undefined;
       NewGroup: undefined;
-      Players: { groupId: string };
+      Players: { 
+        groupId: string,
+        groupName: string, 
+      };
     }
   }
 }
