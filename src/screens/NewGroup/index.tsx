@@ -1,15 +1,26 @@
+import { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
+
 import { Header } from "@components/Header";
-import { Container, Content, Icon } from "./styles";
 import { Highlight } from "@components/Highlight";
 import { Button } from "@components/Button";
 import { Input } from "@components/Input";
-import { useNavigation } from "@react-navigation/native";
+
+import { Container, Content, Icon } from "./styles";
+
+type Group = {
+  id: string;
+  name: string;
+}
 
 export function NewGroup() {
+  const [groupName, setGroupName] = useState<string>('');
+
   const navigation = useNavigation();
 
   function handleCreate() {
-    navigation.navigate('Players', { groupId: '1' });
+    const id = new Date().getTime().toString();
+    navigation.navigate('Players', { groupId: id, groupName: groupName });
   }
 
   return (
@@ -26,6 +37,8 @@ export function NewGroup() {
         <Input 
           placeholder="Group name"
           style={{ marginBottom: 20 }}
+          value={groupName}
+          onChangeText={setGroupName}
         />
 
         <Button 
