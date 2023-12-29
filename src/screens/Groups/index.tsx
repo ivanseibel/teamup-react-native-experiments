@@ -49,6 +49,12 @@ const INITIAL_GROUPS = [
 export function Groups() {
   const [groups, setGroups] = useState<Group[]>(INITIAL_GROUPS);
 
+  const navigation = useNavigation();
+
+  function handleOpenNewGroup() {
+    navigation.navigate('NewGroup');
+  }
+
   return (
     <Container>
       <Header />
@@ -74,7 +80,7 @@ export function Groups() {
       <Button
         label="Create Group"
         variation="PRIMARY"
-        onPress={() => {Alert.alert('Create Group')}}
+        onPress={handleOpenNewGroup}
       />
     </Container>
   );
