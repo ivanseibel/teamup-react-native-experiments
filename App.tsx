@@ -3,7 +3,7 @@ import { useFonts, Roboto_400Regular, Roboto_700Bold } from '@expo-google-fonts/
 import defaultTheme from './src/theme'
 import { Loading } from '@components/Loading'
 import { StatusBar } from 'react-native'
-import { Groups } from '@screens/Groups'
+import { Routes } from '@routes/index'
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -18,7 +18,7 @@ export default function App() {
         backgroundColor='transparent'
         translucent
       />
-      { !fontsLoaded ? <Loading /> : <Groups /> }
+      { !fontsLoaded ? <Loading /> : <Routes /> }
     </ThemeProvider>
   );
 }
