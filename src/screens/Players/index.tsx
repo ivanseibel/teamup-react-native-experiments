@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Alert, FlatList } from "react-native";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 
@@ -47,7 +47,7 @@ export function Players() {
     }
   }
 
-  useFocusEffect(useCallback(() => {
+  useEffect(() => {
     async function loadPlayers() {
       try {
         const players = await getPlayersByGroup(groupId);
@@ -63,7 +63,7 @@ export function Players() {
     }
 
     loadPlayers();
-  }, [groupId]));
+  }, [team, groupId]);
 
   return (
     <Container>
