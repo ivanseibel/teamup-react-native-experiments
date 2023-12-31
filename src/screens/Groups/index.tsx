@@ -9,8 +9,8 @@ import { Button } from "@components/Button";
 import { EmptyList } from "@components/EmptyList";
 
 import { Container } from "./styles";
-import { Group } from "@storage/group/createGroup";
 import { getAllGroups } from "@storage/group/getAllGroups";
+import { Group } from "@storage/group/GroupStorageDTO";
 import { Loading } from "@components/Loading";
 
 export function Groups() {
