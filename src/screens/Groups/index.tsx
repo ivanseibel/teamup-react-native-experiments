@@ -53,6 +53,7 @@ export function Groups() {
         renderItem={({ item }) => (
           <GroupCard 
             title={item.name}
+            onPress={() => navigation.navigate('Players', { groupId: item.id, groupName: item.name })}
           />
         )}
       />
