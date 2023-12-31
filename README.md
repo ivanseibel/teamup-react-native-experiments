@@ -39,7 +39,7 @@ npm start
 <p float="left">
   <img src="./screenshots/screenshot1.jpeg" width="250" />
   <img src="./screenshots/screenshot2.jpeg" width="250" /> 
-  <img src="./screenshots/screenshot2.jpeg" width="250" /> 
+  <img src="./screenshots/screenshot3.jpeg" width="250" /> 
 </p>
 
 ## Contributing
