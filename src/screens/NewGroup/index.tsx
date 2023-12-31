@@ -9,6 +9,7 @@ import { Input } from "@components/Input";
 import { Container, Content, Icon } from "./styles";
 import { createGroup } from "@storage/group/createGroup";
 import { Alert } from "react-native";
+import { AppError } from "@utils/AppError";
 
 export function NewGroup() {
   const [groupName, setGroupName] = useState<string>('');
@@ -17,14 +18,19 @@ export function NewGroup() {
 
   async function handleCreate() {
     try {
-      const id = await createGroup(groupName);
+      const newGroup = await createGroup(groupName);
 
-      if (!id) return;
+      if (!newGroup) return;
 
-      navigation.navigate('Players', { groupId: id, groupName: groupName });
+      navigation.navigate('Players', { groupId: newGroup.id, groupName: newGroup.name });
     } catch (err) {
+      if (err instanceof AppError) {
+        Alert.alert('New Group', err.message);
+        return;
+      }
+      
       console.log(err);
-      Alert.alert('Error', 'Ooops, something went wrong.');
+      Alert.alert('New Group', 'There was an error creating the group.');
     }
   }
 

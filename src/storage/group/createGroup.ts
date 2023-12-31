@@ -3,6 +3,8 @@ import { Alert } from 'react-native';
 
 import { GROUP_COLLECTION } from '@storage/storageConfig'; 
 import { getAllGroups } from './getAllGroups';
+import { AppError } from '@utils/AppError';
+import { NewGroup } from '../../screens/NewGroup/index';
 
 export type Group = {
   id: string;
@@ -10,34 +12,31 @@ export type Group = {
 }
 
 export const createGroup = async (groupName: string) => {
-  const id = new Date().getTime().toString();
+  const newGroup: Group = {
+    id: new Date().getTime().toString(),
+    name: groupName.trim()
+  };
 
+  if (!newGroup.name) {
+    throw new AppError('Group name is required');
+  }
+  
   try {
     const groups = await getAllGroups();
     
     if (groups) {
       const parsedGroups = groups;
   
-      if (parsedGroups.find((g: Group) => g.name === groupName)) {
-        return Alert.alert('Ooops!', 'This group already exists.');
+      if (parsedGroups.find((g: Group) => g.name === newGroup.name)) {
+        throw new AppError('Group already exists');
       }
   
-      const group: Group = {
-        id,
-        name: groupName
-      };
-  
-      const newGroups = [...parsedGroups, group];
-      await AsyncStorage.setItem(GROUP_COLLECTION, JSON.stringify(newGroups));
+      await AsyncStorage.setItem(GROUP_COLLECTION, JSON.stringify([...parsedGroups, newGroup]));
     } else {
-      const group: Group = {
-        id,
-        name: groupName
-      };
-      await AsyncStorage.setItem(GROUP_COLLECTION, JSON.stringify([group]));
+      await AsyncStorage.setItem(GROUP_COLLECTION, JSON.stringify([newGroup]));
     }
 
-    return id;
+    return newGroup;
   } catch (err) {
     throw err;
   }
