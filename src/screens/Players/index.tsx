@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useState } from "react";
-import { Alert, FlatList } from "react-native";
-import { useFocusEffect, useRoute } from "@react-navigation/native";
+import { useEffect, useRef, useState } from "react";
+import { Alert, FlatList, TextInput } from "react-native";
+import { useRoute } from "@react-navigation/native";
 
 import { Header } from "@components/Header";
 import { Highlight } from "@components/Highlight";
@@ -31,11 +31,13 @@ export function Players() {
 
   const route = useRoute();
   const { groupName, groupId } = route.params as RouteParams;
+  const playerNameTextInputRef = useRef<TextInput>(null);
 
   async function handleAddPlayerToGroup() {
     try {
       const player = await addPlayerToGroup(playerName, groupId, team);
       setPlayers([...players, player]);
+      playerNameTextInputRef.current?.blur();
       setPlayerName('');
     } catch (err) {
       if (err instanceof AppError) {
@@ -82,6 +84,9 @@ export function Players() {
           autoCapitalize="none"
           value={playerName}
           onChangeText={setPlayerName}
+          inputRef={playerNameTextInputRef}
+          onSubmitEditing={handleAddPlayerToGroup}
+          returnKeyType="done"
         />
         <IconButton 
           variant="primary"
