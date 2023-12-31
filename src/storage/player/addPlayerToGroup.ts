@@ -12,8 +12,6 @@ export async function addPlayerToGroup(playerName: string, groupId: string, team
       team: team
     };
 
-    console.log(newPlayer);
-
     if (!newPlayer.name) {
       throw new AppError('Missing player name');
     }
