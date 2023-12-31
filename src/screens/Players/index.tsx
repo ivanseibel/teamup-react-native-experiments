@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { FlatList } from "react-native";
-import { useRoute } from "@react-navigation/native";
+import { useCallback, useState } from "react";
+import { Alert, FlatList } from "react-native";
+import { useFocusEffect, useRoute } from "@react-navigation/native";
 
 import { Header } from "@components/Header";
 import { Highlight } from "@components/Highlight";
@@ -12,6 +12,10 @@ import { Container, Form, HeaderList, PlayersNumber } from "./styles";
 import { PlayerCard } from "@components/PlayerCard";
 import { EmptyList } from "@components/EmptyList";
 import { Button } from "@components/Button";
+import { addPlayerToGroup } from "@storage/player/addPlayerToGroup";
+import { AppError } from "@utils/AppError";
+import { PlayerStorageDTO } from "@storage/player/PlayerStorageDTO";
+import { getPlayersByGroup } from "@storage/player/getPlayersByGroup";
 
 type Teams = 'Team A' | 'Team B';
 
@@ -22,10 +26,44 @@ type RouteParams = {
 
 export function Players() {
   const [team, setTeam] = useState<Teams>('Team A');
-  const [players, setPlayers] = useState<Player[]>(PLAYERS);
+  const [playerName, setPlayerName] = useState('');
+  const [players, setPlayers] = useState<PlayerStorageDTO[]>([]);
 
   const route = useRoute();
-  const { groupName } = route.params as RouteParams;
+  const { groupName, groupId } = route.params as RouteParams;
+
+  async function handleAddPlayerToGroup() {
+    try {
+      const player = await addPlayerToGroup(playerName, groupId, team);
+      setPlayers([...players, player]);
+      setPlayerName('');
+    } catch (err) {
+      if (err instanceof AppError) {
+        return Alert.alert('Add new Player', err.message);
+      }
+
+      console.log(err);
+      Alert.alert('Add new Player', 'An error has occurred while trying to add the new Player.');
+    }
+  }
+
+  useFocusEffect(useCallback(() => {
+    async function loadPlayers() {
+      try {
+        const players = await getPlayersByGroup(groupId);
+        setPlayers(players);
+      } catch (err) {
+        if (err instanceof AppError) {
+          return Alert.alert('Players', err.message);
+        }
+
+        console.log(err);
+        Alert.alert('Players', 'An error has occurred while trying to load the players.');
+      }
+    }
+
+    loadPlayers();
+  }, [groupId]));
 
   return (
     <Container>
@@ -41,11 +79,14 @@ export function Players() {
         <Input 
           placeholder="Type the player name"
           autoCorrect={false}
+          autoCapitalize="none"
+          value={playerName}
+          onChangeText={setPlayerName}
         />
         <IconButton 
           variant="primary"
           icon="add"
-          onPress={() => {}}
+          onPress={handleAddPlayerToGroup}
         />
       </Form>
 
