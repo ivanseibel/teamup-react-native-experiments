@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { FlatList } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useCallback, useEffect, useState } from "react";
+import { Alert, FlatList } from "react-native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
 import { Header } from "@components/Header";
 import { Highlight } from "@components/Highlight";
@@ -9,51 +9,30 @@ import { Button } from "@components/Button";
 import { EmptyList } from "@components/EmptyList";
 
 import { Container } from "./styles";
-
-type Group = {
-  id: string;
-  title: string;
-}
-
-const INITIAL_GROUPS = [
-  {
-    id: '1',
-    title: 'Sunday Football'
-  },
-  {
-    id: '2',
-    title: 'Saturday Football'
-  },
-  {
-    id: '3',
-    title: 'Friday Football'
-  },
-  {
-    id: '4',
-    title: 'Thursday Football'
-  },
-  {
-    id: '5',
-    title: 'Wednesday Football'
-  },
-  {
-    id: '6',
-    title: 'Tuesday Football'
-  },
-  {
-    id: '7',
-    title: 'Monday Football'
-  },
-];
+import { Group } from "@storage/group/createGroup";
+import { getAllGroups } from "@storage/group/getAllGroups";
 
 export function Groups() {
-  const [groups, setGroups] = useState<Group[]>(INITIAL_GROUPS);
+  const [groups, setGroups] = useState<Group[]>([]);
 
   const navigation = useNavigation();
 
   function handleOpenNewGroup() {
     navigation.navigate('NewGroup');
   }
+
+  async function fetchGroups() {
+    try {
+      const groups = await getAllGroups();
+      setGroups(groups);
+    } catch (err) {
+      Alert.alert('Error', 'Ooops, something went wrong.');
+    }
+  }
+
+  useFocusEffect(useCallback(() => {
+    fetchGroups();
+  }, []));
 
   return (
     <Container>
@@ -73,7 +52,7 @@ export function Groups() {
         ]}
         renderItem={({ item }) => (
           <GroupCard 
-            title={item.title}
+            title={item.name}
           />
         )}
       />
