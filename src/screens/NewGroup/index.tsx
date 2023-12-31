@@ -7,20 +7,25 @@ import { Button } from "@components/Button";
 import { Input } from "@components/Input";
 
 import { Container, Content, Icon } from "./styles";
-
-type Group = {
-  id: string;
-  name: string;
-}
+import { createGroup } from "@storage/group/createGroup";
+import { Alert } from "react-native";
 
 export function NewGroup() {
   const [groupName, setGroupName] = useState<string>('');
 
   const navigation = useNavigation();
 
-  function handleCreate() {
-    const id = new Date().getTime().toString();
-    navigation.navigate('Players', { groupId: id, groupName: groupName });
+  async function handleCreate() {
+    try {
+      const id = await createGroup(groupName);
+
+      if (!id) return;
+
+      navigation.navigate('Players', { groupId: id, groupName: groupName });
+    } catch (err) {
+      console.log(err);
+      Alert.alert('Error', 'Ooops, something went wrong.');
+    }
   }
 
   return (
