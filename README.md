@@ -34,9 +34,18 @@ npm install
 npm start
 ```
 
+## Screenshots
+
+<p float="left">
+  <img src="./screenshots/screenshot1.jpg" width="250" />
+  <img src="./screenshots/screenshot2.jpg" width="250" /> 
+  <img src="./screenshots/screenshot2.jpg" width="250" /> 
+</p>
+
 ## Contributing
 
 Contributions to TeamUp Playmaker are always welcome, whether it's improving documentation, fixing bugs, or implementing new features. Please read our contribution guidelines before submitting a pull request.
+
 
 ## License
 
