@@ -18,6 +18,7 @@ import { PlayerStorageDTO } from "@storage/player/PlayerStorageDTO";
 import { getPlayersByGroup } from "@storage/player/getPlayersByGroup";
 import { removePlayerFromGroup } from "@storage/player/removePlayerFromGroup";
 import { removeGroup } from "@storage/group/removeGroup";
+import { Loading } from "@components/Loading";
 
 type Teams = 'Team A' | 'Team B';
 
@@ -27,6 +28,7 @@ type RouteParams = {
 }
 
 export function Players() {
+  const [isLoading, setIsLoading] = useState(true);
   const [team, setTeam] = useState<Teams>('Team A');
   const [playerName, setPlayerName] = useState('');
   const [players, setPlayers] = useState<PlayerStorageDTO[]>([]);
@@ -69,6 +71,7 @@ export function Players() {
 
   async function loadPlayers() {
     try {
+      setIsLoading(true);
       const players = await getPlayersByGroup(groupId);
       setPlayers(players);
     } catch (err) {
@@ -78,6 +81,8 @@ export function Players() {
 
       console.log(err);
       Alert.alert('Players', 'An error has occurred while trying to load the players.');
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -161,26 +166,33 @@ export function Players() {
         </PlayersNumber>
       </HeaderList>
 
-      <FlatList 
-        data={players.filter((player) => player.team === team)}
-        keyExtractor={(item) => item.id}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={[
-          { paddingBottom: 100 },
-          players.length === 0 && { flex: 1 }
-        ]}
-        ListEmptyComponent={() => (
-          <EmptyList 
-            title="Add players to this team"
+      { isLoading 
+        ? <Loading />
+        : (
+          <FlatList 
+            data={players.filter((player) => player.team === team)}
+            keyExtractor={(item) => item.id}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={[
+              { paddingBottom: 100 },
+              players.length === 0 && { flex: 1 }
+            ]}
+            ListEmptyComponent={() => (
+              <EmptyList 
+                title="Add players to this team"
+              />
+            )}
+            renderItem={({ item }) => (
+              <PlayerCard 
+                name={item.name}
+                onRemove={() => handleRemovePlayerFromGroup(item.id)}
+              />
+            )}
           />
-        )}
-        renderItem={({ item }) => (
-          <PlayerCard 
-            name={item.name}
-            onRemove={() => handleRemovePlayerFromGroup(item.id)}
-          />
-        )}
-      />
+        )
+    }
+
+
 
       <Button 
         label="Delete Group"
