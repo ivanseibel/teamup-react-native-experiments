@@ -15,12 +15,6 @@ import { Button } from "@components/Button";
 
 type Teams = 'Team A' | 'Team B';
 
-type Player = {
-  id: string;
-  name: string;
-  team: string;
-}
-
 type RouteParams = {
   groupName: string;
 }
